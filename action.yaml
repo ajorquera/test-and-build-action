@@ -1,0 +1,55 @@
+name: Test and Build
+description: Runs tests, linting, and builds the project using Node.js
+inputs: 
+  env-as-json: 
+    description: 'Environment variables as JSON string'
+    default: '{}'
+
+  node-version:
+    description: 'Node.js version to use'
+    default: '20'
+
+  skips-tests: 
+    description: 'Skip running tests'
+    default: 'false'
+
+  skips-lint:
+    description: 'Skip running lint'
+    default: 'false'
+
+runs:
+  using: 'composite'
+  steps:
+  - name: Checkout Code
+    uses: actions/checkout@v4
+    
+  - name: Install Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: ${{ inputs.node-version }}
+      cache: 'yarn'
+  
+  - name: Set Environment Variables
+    run: |
+      echo "Setting environment variables from JSON input"
+      echo '${{ inputs.env-as-json }}' | jq -r 'to_entries | .[] | "export \(.key)=\(.value)"' >> $GITHUB_ENV
+    shell: bash
+
+  - name: Install Dependencies
+    shell: bash
+    run: yarn 
+
+  - name: Run lint
+    run: yarn lint
+    shell: bash
+    if: ${{ inputs.skips-lint != 'true' }}
+
+  - name: Run Tests
+    run: yarn test
+    shell: bash
+    if: ${{ inputs.skips-tests != 'true' }}
+
+  - name: Build Project
+    shell: bash
+    run: yarn build
+    
