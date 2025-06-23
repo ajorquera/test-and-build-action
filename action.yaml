@@ -32,7 +32,7 @@ runs:
   - name: Set Environment Variables
     run: |
       echo "Setting environment variables from JSON input"
-      echo '${{ inputs.env-as-json }}' | jq -r 'to_entries | .[] | "export \(.key)=\(.value)"' >> $GITHUB_ENV
+      echo '${{ inputs.env-as-json }}' | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' >> $GITHUB_ENV
     shell: bash
 
   - name: Install Dependencies
