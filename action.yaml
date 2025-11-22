@@ -17,6 +17,10 @@ inputs:
     description: 'Skip running lint'
     default: 'false'
 
+  registry-url:
+    description: 'Registry to set up for auth'
+    default: ''
+
 runs:
   using: 'composite'
   steps:
@@ -28,6 +32,7 @@ runs:
     with:
       node-version: ${{ inputs.node-version }}
       cache: 'yarn'
+      registry-url: ${{ inputs.registry-url }}
   
   - name: Set Environment Variables
     run: |
