@@ -1,0 +1,14 @@
+{
+  "name": "test-and-build-action",
+  "version": "1.1.0",
+  "description": "A GitHub Action to test and build projects",
+  "homepage": "https://github.com/ajorquera/test-and-build-action#readme",
+  "bugs": {
+    "url": "https://github.com/ajorquera/test-and-build-action/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajorquera/test-and-build-action.git"
+  },
+  "license": "ISC"
+}
